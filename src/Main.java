@@ -118,6 +118,8 @@ public class Main {
         readFile(file2);
 
         filesCompareByLine(pathFile1, pathFile2);
+
+        //this is a test
     }
 
 }
