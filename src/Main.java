@@ -120,6 +120,7 @@ public class Main {
         filesCompareByLine(pathFile1, pathFile2);
 
         //this is a test
+        //Secret change 
     }
 
 }
