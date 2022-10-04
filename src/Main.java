@@ -120,7 +120,5 @@ public class Main {
         filesCompareByLine(pathFile1, pathFile2);
     }
 
-    //This is a comment
-    //Hello
 }
 
