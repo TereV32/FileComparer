@@ -31,8 +31,6 @@ public class FileCompareApplication extends Application {
     TextArea file1Text = new TextArea(null);
     TextArea file2Text = new TextArea(null);
 
-    String similarities;
-    String differences;
 
     TextArea differenceFile1 = new TextArea();
     TextArea differenceFile2 = new TextArea();
@@ -48,6 +46,8 @@ public class FileCompareApplication extends Application {
 
 
         SplitPane splitPane = new SplitPane();
+        Scene scene = new Scene(splitPane);
+
         VBox leftVBox = new VBox(file1Text, addFileButton, differenceFile1);
         StackPane leftSide = new StackPane(leftVBox);
 
@@ -69,7 +69,7 @@ public class FileCompareApplication extends Application {
 
 
 
-
+        //Allows user to add two files, using getFile to get file path
         addFileButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
@@ -83,7 +83,7 @@ public class FileCompareApplication extends Application {
                     } else {
                         getFile();
                         file = Methods.getFile(filePath);
-                        pathFile1 = Path.of(filePath);
+                        pathFile2 = Path.of(filePath);
                         file2Name = file;
                     }
                     i++;
@@ -92,6 +92,8 @@ public class FileCompareApplication extends Application {
             }
         });
 
+
+        //Compare files and displays difference by showing the lines that are different
         compareFiles.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
@@ -107,6 +109,7 @@ public class FileCompareApplication extends Application {
 
 
         primaryStage.setScene(new Scene(pane, 800, 750));
+
         primaryStage.show();
 
     }
@@ -116,30 +119,19 @@ public class FileCompareApplication extends Application {
         launch();
     }
 
+
+    //Method that gets path for file
     public void getFile() {
         TextInputDialog getFileDialog = new TextInputDialog();
         getFileDialog.setHeaderText(null);
         getFileDialog.setTitle("Add File");
         getFileDialog.setContentText("Please enter file path:");
-        ButtonType getFileButton = new ButtonType("Add File");
-        Label addFileLabel = new Label("Enter File Path: ");
-        TextField addFileField = new TextField();
-        VBox popUpSetUp = new VBox();
          getFileDialog.showAndWait();
          filePath = getFileDialog.getResult();
-//        int i = 1;
-//        while (i <= 2) {
-
     }
-//        if (i == 1) {
-//            file1Name = file;
-//        } else {
-//            file2Name = file;
-//        }
-//        i++;
-//    }
 
 
+    //Method that reads file and gets context
     public void getFileText(String file1Name, String file2Name) {
         file1Context =Methods.readFile(file1Name);
         file2Context =Methods.readFile(file2Name);
