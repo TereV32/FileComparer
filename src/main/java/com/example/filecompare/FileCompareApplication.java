@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 
 
+
 public class FileCompareApplication extends Application {
 
     public String filePath = null;
@@ -36,13 +37,13 @@ public class FileCompareApplication extends Application {
     TextArea differenceFile2 = new TextArea();
 
 
+
     @Override
     public void start(Stage primaryStage) throws IOException {
         primaryStage.setTitle("File Compare");
 
         Button addFileButton = new Button("Add File");
         Button compareFiles = new Button("Compare Files");
-
 
 
         SplitPane splitPane = new SplitPane();
@@ -123,6 +124,8 @@ public class FileCompareApplication extends Application {
     //Method that gets path for file
     public void getFile() {
         TextInputDialog getFileDialog = new TextInputDialog();
+        getFileDialog.setResizable(true);
+        getFileDialog.getEditor().setPrefWidth(300);
         getFileDialog.setHeaderText(null);
         getFileDialog.setTitle("Add File");
         getFileDialog.setContentText("Please enter file path:");
