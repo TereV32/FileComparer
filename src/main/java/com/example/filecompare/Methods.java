@@ -27,7 +27,7 @@ public class Methods {
 
         boolean areEqual = true;
 
-        int lineNum = 0;
+        int lineNum = 1;
 
         while (file1 != null && file2 != null) {
             if (file1 == null && file2 == null) {
@@ -37,8 +37,8 @@ public class Methods {
                     System.out.println("Two files have same content.");
                 } else {
                     System.out.println("Two files have different content. They differ at line " + lineNum);
-                    difference[1] += "\n" + file1;
-                    difference[2] += "\n" + file2;
+                    difference[1] += lineNum + ": " + file1 + "\n";
+                    difference[2] += lineNum + ": " + file2 + "\n";
 
                     System.out.println("File1 has " + file1 + " and File2 has " + file2 + " at line " + lineNum);
 
@@ -51,8 +51,8 @@ public class Methods {
                     System.out.println("Two files have same content.");
                 } else {
                     System.out.println("Two files have different content. They differ at line(s) " + lineNum + "\n");
-                    difference[1] += "\n" + file1;
-                    difference[2] += "\n" + file2;
+                    difference[1] += lineNum + ": " + file1 + "\n";
+                    difference[2] += lineNum + ": " + file2 + "\n";
                     System.out.println("File1 has " + file1 + " and File2 has " + file2 + " at line " + lineNum);
 
                 }
@@ -75,6 +75,7 @@ public class Methods {
 
     public static String readFile(String file) {
         String fileText = "";
+        int lineNum = 1;
         try {
             try (Scanner sc = new Scanner(new File((file)))) {
                 if (!sc.hasNext()) {
@@ -82,7 +83,8 @@ public class Methods {
                 } else {
                     while (sc.hasNext()) {
                         String line = sc.nextLine();
-                        fileText += "\n" + line;
+                        fileText += lineNum + ": " + line + "\n";
+                        lineNum++;
                     }
                 }
             }
@@ -119,33 +121,6 @@ public class Methods {
         System.out.println(file1);
         System.out.println(file2);
 
-//        int i = 1;
-//        String file1 = null;
-//        String file2 = null;
-//        Path pathFile1 = null;
-//        Path pathFile2 = null;
-//        Path file1Name = null;
-//        Path file2Name = null;
-//
-//
-//        while (i <= 2) {
-//            System.out.println("Enter the path to file: ");
-//            if (i == 1) {
-//                file1Name = getFile();
-//            } else if (i == 2) {
-//                file2Name = getFile();
-//            }
-//            i++;
-//        }
-//
-//        System.out.println(file1Name.toString());
-//        readFile(file1);
-//        System.out.println(file2Name.toString());
-//        readFile(file2);
-//
-//        filesCompareByLine(pathFile1, pathFile2);
-//
-//        //this is a test
     }
 
 }
