@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/FileComparer.iml" filepath="$PROJECT_DIR$/FileComparer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/FileCompare.iml" filepath="$PROJECT_DIR$/FileCompare.iml" />
     </modules>
   </component>
 </project>
