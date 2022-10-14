@@ -8,8 +8,10 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 
@@ -17,7 +19,6 @@ import java.nio.file.Path;
 
 public class FileCompareApplication extends Application {
 
-    public String filePath = null;
 
     public Path pathFile1 = null;
     public Path pathFile2 = null;
@@ -36,23 +37,25 @@ public class FileCompareApplication extends Application {
     TextArea differenceFile1 = new TextArea();
     TextArea differenceFile2 = new TextArea();
 
+    public FileChooser chooser = new FileChooser();
+    public File chosenFile;
 
 
     @Override
     public void start(Stage primaryStage) throws IOException {
         primaryStage.setTitle("File Compare");
 
-        Button addFileButton = new Button("Add File");
+        Button getFile1 = new Button("Add File 1");
+        Button getFile2 = new Button("Add File 2");
         Button compareFiles = new Button("Compare Files");
 
 
         SplitPane splitPane = new SplitPane();
-        Scene scene = new Scene(splitPane);
 
-        VBox leftVBox = new VBox(file1Text, addFileButton, differenceFile1);
+        VBox leftVBox = new VBox(file1Text, getFile1, differenceFile1);
         StackPane leftSide = new StackPane(leftVBox);
 
-        VBox rightVBox = new VBox(file2Text, compareFiles, differenceFile2);
+        VBox rightVBox = new VBox(file2Text, getFile2, differenceFile2, compareFiles);
         StackPane rightSide = new StackPane(rightVBox);
 
 
@@ -71,25 +74,27 @@ public class FileCompareApplication extends Application {
 
 
         //Allows user to add two files, using getFile to get file path
-        addFileButton.setOnAction(new EventHandler<ActionEvent>() {
+        getFile1.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                int i = 1;
-                while (i <= 2) {
-                    if (i == 1) {
-                        getFile();
-                        file = Methods.getFile(filePath);
-                        pathFile1 = Path.of(filePath);
-                        file1Name = file;
-                    } else {
-                        getFile();
-                        file = Methods.getFile(filePath);
-                        pathFile2 = Path.of(filePath);
-                        file2Name = file;
-                    }
-                    i++;
-                }
-                getFileText(file1Name, file2Name);
+                chosenFile = chooser.showOpenDialog(primaryStage);
+                pathFile1 = Path.of(String.valueOf(chosenFile));
+                file1Name = String.valueOf(chosenFile);
+
+                file1Context =Methods.readFile(file1Name);
+                file1Text.setText(file1Context);
+            }
+        });
+
+        getFile2.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                chosenFile = chooser.showOpenDialog(primaryStage);
+                pathFile2 = Path.of(String.valueOf(chosenFile));
+                file2Name = String.valueOf(chosenFile);
+
+                file2Context =Methods.readFile(file2Name);
+                file2Text.setText(file2Context);
             }
         });
 
@@ -120,26 +125,4 @@ public class FileCompareApplication extends Application {
         launch();
     }
 
-
-    //Method that gets path for file
-    public void getFile() {
-        TextInputDialog getFileDialog = new TextInputDialog();
-        getFileDialog.setResizable(true);
-        getFileDialog.getEditor().setPrefWidth(300);
-        getFileDialog.setHeaderText(null);
-        getFileDialog.setTitle("Add File");
-        getFileDialog.setContentText("Please enter file path:");
-         getFileDialog.showAndWait();
-         filePath = getFileDialog.getResult();
-    }
-
-
-    //Method that reads file and gets context
-    public void getFileText(String file1Name, String file2Name) {
-        file1Context =Methods.readFile(file1Name);
-        file2Context =Methods.readFile(file2Name);
-
-        file1Text.setText(file1Context);
-        file2Text.setText(file2Context);
-    }
 }
