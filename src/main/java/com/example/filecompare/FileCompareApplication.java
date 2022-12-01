@@ -10,11 +10,13 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.Pair;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 
+import static com.example.filecompare.Methods.*;
 
 
 public class FileCompareApplication extends Application {
@@ -35,7 +37,7 @@ public class FileCompareApplication extends Application {
 
 
     TextArea differenceFile1 = new TextArea();
-    TextArea differenceFile2 = new TextArea();
+    TextArea similarFile = new TextArea();
 
     public FileChooser chooser = new FileChooser();
     public File chosenFile;
@@ -55,7 +57,7 @@ public class FileCompareApplication extends Application {
         VBox leftVBox = new VBox(file1Text, getFile1, differenceFile1);
         StackPane leftSide = new StackPane(leftVBox);
 
-        VBox rightVBox = new VBox(file2Text, getFile2, differenceFile2, compareFiles);
+        VBox rightVBox = new VBox(file2Text, getFile2, similarFile, compareFiles);
         StackPane rightSide = new StackPane(rightVBox);
 
 
@@ -81,7 +83,7 @@ public class FileCompareApplication extends Application {
                 pathFile1 = Path.of(String.valueOf(chosenFile));
                 file1Name = String.valueOf(chosenFile);
 
-                file1Context =Methods.readFile(file1Name);
+                file1Context = readFile(file1Name);
                 file1Text.setText(file1Context);
             }
         });
@@ -93,7 +95,7 @@ public class FileCompareApplication extends Application {
                 pathFile2 = Path.of(String.valueOf(chosenFile));
                 file2Name = String.valueOf(chosenFile);
 
-                file2Context =Methods.readFile(file2Name);
+                file2Context = readFile(file2Name);
                 file2Text.setText(file2Context);
             }
         });
@@ -104,8 +106,10 @@ public class FileCompareApplication extends Application {
             @Override
             public void handle(ActionEvent actionEvent) {
                 try {
-                    differenceFile1.setText(Methods.filesCompareByLine(file1Name, file2Name)[1]);
-                    differenceFile2.setText(Methods.filesCompareByLine(file1Name, file2Name)[2]);
+                    differenceFile1.setText("File 1: \n" + Methods.filesCompareByLine(file1Name, file2Name)[1] + "\nFile 2: \n" +
+                            filesCompareByLine(file1Name, file2Name)[2]);
+                    similarFile.setText("File 1: \n" + Methods.filesCompareByLineSimilar(file1Name, file2Name)[1] + "\nFile 2: \n" +
+                            Methods.filesCompareByLineSimilar(file1Name, file2Name)[2]);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

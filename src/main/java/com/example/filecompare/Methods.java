@@ -1,5 +1,7 @@
 package com.example.filecompare;
 
+import javafx.util.Pair;
+
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
@@ -20,7 +22,6 @@ public class Methods {
         String file2 = reader2.readLine();
 
 
-        String similar;
         String[] difference = new String[3];
         difference[1] = "";
         difference[2] = "";
@@ -35,6 +36,9 @@ public class Methods {
 
                 if (areEqual) {
                     System.out.println("Two files have same content.");
+
+
+                    System.out.println("File1 has " + file1 + " and File2 has " + file2 + " at line " + lineNum);
                 } else {
                     System.out.println("Two files have different content. They differ at line " + lineNum);
                     difference[1] += lineNum + ": " + file1 + "\n";
@@ -49,15 +53,21 @@ public class Methods {
 
                 if (areEqual) {
                     System.out.println("Two files have same content.");
+
+
+                    System.out.println("File1 has " + file1 + " and File2 has " + file2 + " at line " + lineNum);
                 } else {
                     System.out.println("Two files have different content. They differ at line(s) " + lineNum + "\n");
                     difference[1] += lineNum + ": " + file1 + "\n";
                     difference[2] += lineNum + ": " + file2 + "\n";
+
                     System.out.println("File1 has " + file1 + " and File2 has " + file2 + " at line " + lineNum);
 
                 }
 //                break;
+
             }
+
 
             file1 = reader1.readLine();
 
@@ -71,6 +81,53 @@ public class Methods {
         reader2.close();
 
         return difference;
+    }
+
+    public static String[] filesCompareByLineSimilar(String file1Name, String file2Name) throws IOException {
+
+        BufferedReader reader1 = new BufferedReader(new FileReader(file1Name));
+        BufferedReader reader2 = new BufferedReader(new FileReader(file2Name));
+
+        String file1 = reader1.readLine();
+        String file2 = reader2.readLine();
+
+
+        String[] similar = new String[3];
+        similar[1] = "";
+        similar[2] = "";
+
+
+        boolean areEqual = true;
+
+        int lineNum = 1;
+
+        while (file1 != null && file2 != null) {
+            if (file1.equalsIgnoreCase(file2)) {
+                System.out.println("Two files have same content.");
+                    similar[1] += lineNum + ": " + file1 + "\n";
+                    similar[2] += lineNum + ": " + file2 + "\n";
+
+//                break;
+                similar[1] += lineNum + ": " + file1 + "\n";
+                similar[2] += lineNum + ": " + file2 + "\n";
+            } else if (!file1.equalsIgnoreCase(file2)) {
+                System.out.println("Two files have different content. They differ at line(s) ");
+            }
+
+
+
+            file1 = reader1.readLine();
+
+            file2 = reader2.readLine();
+
+            lineNum++;
+        }
+
+        reader1.close();
+
+        reader2.close();
+
+        return similar;
     }
 
     public static String readFile(String file) {

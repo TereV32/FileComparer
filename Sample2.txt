@@ -1,3 +1,5 @@
 Hello World
 This is a sample file
-Different Line
+This is a different line
+
+This is a similar line!
