@@ -108,8 +108,6 @@ public class Methods {
                     similar[2] += lineNum + ": " + file2 + "\n";
 
 //                break;
-                similar[1] += lineNum + ": " + file1 + "\n";
-                similar[2] += lineNum + ": " + file2 + "\n";
             } else if (!file1.equalsIgnoreCase(file2)) {
                 System.out.println("Two files have different content. They differ at line(s) ");
             }
